@@ -20,15 +20,13 @@ def append_task(tasks_file: str, date: str, url: str):
 
 
 def update_task_status(tasks_file: str, url: str, new_status: str):
-    lines = Path(tasks_file).read_text().splitlines()
+    lines = Path(tasks_file).read_text(encoding="utf-8").splitlines()
     out = []
     for line in lines:
-        if url in line:
-            out.append(
-                line.replace("- [ ]", f"- [{new_status}]")
-                .replace("- [F]", f"- [{new_status}]")
-                .replace("- [X]", f"- [{new_status}]")
-            )
+        task = parse_task_line(line)
+        if task and task["url"] == url:
+            updated = re.sub(r"^- \[[^\]]+\]", f"- [{new_status}]", line, count=1)
+            out.append(updated)
         else:
             out.append(line)
-    Path(tasks_file).write_text("\n".join(out) + "\n")
+    Path(tasks_file).write_text("\n".join(out) + "\n", encoding="utf-8")

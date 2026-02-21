@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 def write_daily_summary(vault_path: str, date: str, text: str) -> str:
     folder = Path(vault_path) / "summaries"
     folder.mkdir(parents=True, exist_ok=True)

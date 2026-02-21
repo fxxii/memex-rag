@@ -1,0 +1,12 @@
+[Unit]
+Description=Knowledgebase Bot
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/openclaw/.openclaw/workspace/projects/20260220-knowledgebase
+ExecStart=/usr/bin/python -m knowledgebase.telegram_bot
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
